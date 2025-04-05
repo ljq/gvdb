@@ -9,7 +9,7 @@ storage:
   postgres:
     enable: false
     host: "localhost"
-    port: 5432
+    port: 54321
     user: "postgres"
     password: "your_password"
     database: "vector_db"

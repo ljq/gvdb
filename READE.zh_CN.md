@@ -121,5 +121,64 @@ Config 测试：
 * [gopkg.in/yaml.v2](https://gopkg.in/yaml.v2)
 * [mattn/go-sqlite3](https://github.com/mattn/go-sqlite3)
 
+### 示例使用
+
+使用方法
+手动创建 test.txt：
+在 examples 目录下创建 test.txt，写入任意内容。例如：
+
+This is a manually created test document.
+
+文件必须存在，否则程序会报错。
+
+运行示例：
+bash
+
+cd examples
+go run text_to_vector.go
+
+程序将读取 test.txt，生成向量，并分别测试三种存储方式。
+
+输出示例（假设 test.txt 内容为 "This is a manually created test document."）：
+
+Testing file storage...
+Inserted test.txt with vector [40 2 3]
+Search result for file storage: ID=test.txt, Similarity=1.0000, Meta=This is a manually created test document.
+
+Testing duckdb storage...
+Inserted test.txt with vector [40 2 3]
+Search result for duckdb storage: ID=test.txt, Similarity=1.0000, Meta=This is a manually created test document.
+
+Testing postgres storage...
+Inserted test.txt with vector [40 2 3]
+Search result for postgres storage: ID=test.txt, Similarity=1.0000, Meta=This is a manually created test document.
+
+如果 PostgreSQL 未运行，会显示错误并跳过。
+
+代码说明
+移除文件创建：
+删除了 createTestFile 函数，仅保留 processTextFile 用于读取已有文件。
+
+test.txt 必须手动创建，程序不再生成。
+
+保留临时文件：
+移除了 defer os.Remove(testFile) 和 defer db.storage.Close()，确保 test.txt 和存储文件（如 vectors.json、vectors.db）保留。
+
+存储支持：
+File：存储在 vectors.json。
+
+DuckDB：存储在 vectors.db。
+
+PostgreSQL：存储在指定数据库表中。
+
+注意事项
+文件存在性：运行前必须在 examples 目录下创建 test.txt，否则会报错 "failed to read file test.txt: ..."。
+
+PostgreSQL：需要确保数据库运行并配置正确，否则会跳过。
+
+结果检查：运行后，可以手动检查 vectors.json、vectors.db 等文件内容。
+
+
+
 #### 开源协议
 MIT License
