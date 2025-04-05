@@ -121,9 +121,9 @@ Test the add, delete, and query functions for each storage (File, DuckDB, Postgr
 - The tests cover the main functions, but more edge cases can be added as needed.
 
 #### Reference Library (Thanks)
-* [gopkg.in/yaml.v2](gopkg.in/yaml.v2)
-* [lib/pg](github.com/lib/pq)
-* [mattn/go-sqlite3](github.com/mattn/go-sqlite3)
+* [lib/pg](https://github.com/lib/pq)
+* [gopkg.in/yaml.v2](https://gopkg.in/yaml.v2)
+* [mattn/go-sqlite3](https://github.com/mattn/go-sqlite3)
 
 #### Open Source Agreement
 MIT License
