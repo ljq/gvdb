@@ -188,3 +188,94 @@ Result check: After running, you can manually check the contents of files such a
 
 #### Open Source Agreement
 MIT License
+
+
+#### Principle Summary
+1. Basic Concepts of Vectorization
+Vectorization is the process of converting unstructured data (such as text, images, audio, etc.) into fixed-length numerical vectors (usually floating-point arrays). These vectors can capture the semantics or characteristics of the data, allowing computers to compare and process the data through mathematical operations (such as distance calculations). In your code, vectorization converts the text content into a three-dimensional vector [float64(len(text)), 2.0, 3.0].
+Why do we need vectorization?
+Semantic representation: Vectors can represent the meaning or characteristics of data, such as the topic or semantics of the text.
+Mathematical operations: Vectors allow the use of distance metrics (such as cosine similarity) to compare similarities.
+Efficient storage and retrieval: Vector databases (such as your implementation) use efficient indexes of vectors (such as HNSW) to speed up searches.
+
+2. Vectorization implementation in code
+In examples/text_to_vector.go, vectorization is implemented by the GenerateEmbedding method of MockEmbeddingModel:
+go
+
+func (m *MockEmbeddingModel) GenerateEmbedding(text string) []float64 {
+return []float64{float64(len(text)), 2.0, 3.0}
+}
+
+Principle interpretation
+Input: text string, such as "This is a manually created test document.".
+
+Processing: Calculate the length of the text (number of characters) and construct a three-dimensional vector:
+First dimension: float64(len(text)), that is, the length of the text (for example, 40).
+
+Second dimension: fixed value 2.0.
+
+Third dimension: fixed value 3.0.
+
+Output: a three-dimensional vector, such as [40.0, 2.0, 3.0].
+
+Features
+Simplicity: This is a simulation implementation that generates vectors based only on the length of the text, without considering the specific content or semantics of the text.
+
+Limitations:
+Unable to capture semantics: texts with different contents but the same length will get the same vector.
+
+Fixed dimension: always output a three-dimensional vector, lacking flexibility.
+
+Purpose: Used to test the storage and search functions of the vector database, not the real semantic representation.
+
+3. Vectorization principles in real scenarios
+In practical applications, vectorization usually relies on natural language processing (NLP) models, especially deep learning models (such as Transformer), to generate semantically rich vectors. The following are common vectorization principles:
+3.1 Bag of Words (BoW)
+Principle: Count the frequency of occurrence of each word in the text and generate a sparse vector.
+
+Example:
+Text: "This is a test"
+
+Vocabulary: {this: 0, is: 1, a: 2, test: 3}
+
+Vector: [1, 1, 1, 1] (indicates that each word appears once)
+
+Limitations: Ignore word order and semantics.
+
+3.2 TF-IDF (Term Frequency-Inverse Document Frequency)
+
+Principle: Based on the bag-of-words model, the importance weight of words is introduced (TF means term frequency, IDF means inverse document frequency) to generate weighted vectors.
+
+Example: "This is a test" may generate [0.3, 0.3, 0.5, 0.7].
+
+Features: Consider the rarity of words, but still lack semantic understanding.
+
+3.3 Word2Vec / GloVe
+
+Principle: Use neural networks to train word embeddings, map each word to a dense vector of fixed dimension, and capture the semantic relationship of words.
+
+Example:
+
+"king" -> [0.1, 0.5, -0.2, ...]
+
+"queen" -> [0.12, 0.48, -0.18, ...] (similar to "king")
+
+Processing text: Take the average or weighted sum of word vectors for sentences.
+
+Features: Capture word-level semantics, but limited effect on long texts.
+
+3.4 Transformer model (BERT, Sentence-BERT, etc.)
+Principle:
+Use a pre-trained Transformer model to encode the entire sentence or paragraph into a fixed-length vector.
+
+Capture the contextual relationship between words through the attention mechanism.
+
+Example:
+Text: "This is a test document"
+
+Output: A 768-dimensional vector (assuming BERT is used), such as [0.12, -0.34, 0.56, ...].
+
+Features:
+Semantically rich: different expressions of the same meaning will have similar vectors.
+
+Calculation complexity: The model needs to be called (such as through API or local inference).
