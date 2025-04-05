@@ -1,0 +1,19 @@
+storage:
+  type: "file" # 指定默认使用的存储类型
+  file:
+    enable: true
+    path: "vectors.json"
+  duckdb:
+    enable: false
+    path: "vectors.db"
+  postgres:
+    enable: false
+    host: "localhost"
+    port: 5432
+    user: "postgres"
+    password: "your_password"
+    database: "vector_db"
+hnsw:
+  dim: 3 # 向量维度
+  m: 16 # HNSW 最大连接数
+  ef: 200 # HNSW 构建参数
