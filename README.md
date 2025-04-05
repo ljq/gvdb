@@ -1,5 +1,7 @@
 ### gvdb (go vector databases)
 
+[中文文档](READE.zh_CN.md)
+
 ### A minimalist vector database based on golang.
 
 #### The goal is to use a YAML configuration file to specify the storage type and related parameters.
