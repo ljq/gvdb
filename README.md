@@ -55,6 +55,10 @@ Notes
 
 After modularization, the code is clearly separated by function and storage mode, which is convenient for independent testing and expansion.
 
+#### Code-Graph
+
+![Code-Graph](./doc/code-graph.png)
+
 #### Implementation instructions
 
 * Configuration file:
